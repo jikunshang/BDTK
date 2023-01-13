@@ -31,9 +31,10 @@
 
 namespace cider::test::util {
 
-void CiderNextgenBenchmarkBase::benchSQL(const std::string& sql) {
+void CiderNextgenBenchmarkBase::benchSQL(const std::string& sql,
+                                         const std::string& file_name) {
   g_enable_debug_timer = true;
-  LOG(INFO) << "BENCH SQL:" << sql;
+  std::cout << "BENCH SQL:" << sql << std::endl;
   // duckdb
   {
     INJECT_TIMER(DuckDb);
@@ -44,7 +45,7 @@ void CiderNextgenBenchmarkBase::benchSQL(const std::string& sql) {
     struct ArrowArray output_array;
     struct ArrowSchema output_schema;
 
-    auto file_or_sql = sql;
+    auto file_or_sql = file_name == "" ? sql : file_name;
     // auto file_or_sql = json_file.size() ? json_file : sql;
     cider_nextgen_query_runner_->runQueryOneBatch(
         file_or_sql, *input_array_, *input_schema_, output_array, output_schema);

@@ -46,7 +46,7 @@ class CiderNextgenBenchmarkBase : public CiderNextgenTestBase {
     cider_nextgen_query_runner_->prepare(create_ddl_);
   }
 
-  void benchSQL(const std::string& sql);
+  void benchSQL(const std::string& sql, const std::string& file_name = "");
 
   void setupDdl(std::string& table_name, std::string& create_ddl) {
     table_name_ = table_name;

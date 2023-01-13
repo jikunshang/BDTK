@@ -46,10 +46,13 @@ void CiderTestBase::assertQueryArrow(const std::string& sql,
   auto duck_res = duckDbQueryRunner_.runSql(sql);
   auto duck_res_batch =
       DuckDbResultConvertor::fetchDataToArrowFormattedCiderBatch(duck_res);
+  std::cout << "duck res:" << duck_res_batch[0]->toStringForArrow() << std::endl;
 
   auto cider_input = json_file.size() ? json_file : sql;
   auto cider_res_batch = std::make_shared<CiderBatch>(
       ciderQueryRunner_.runQueryOneBatch(cider_input, input_[0], true));
+  std::cout << "cider res:" << cider_res_batch->toStringForArrow() << std::endl;
+
   EXPECT_TRUE(CiderBatchChecker::checkArrowEq(duck_res_batch, cider_res_batch));
 }
 
@@ -58,6 +61,8 @@ void CiderTestBase::assertQueryArrow(const std::string& sql,
                                      const bool ignore_order) {
   auto cider_res_batch = std::make_shared<CiderBatch>(
       ciderQueryRunner_.runQueryOneBatch(sql, input_[0], true));
+  std::cout << "expect res:" << expected_batch->toStringForArrow() << std::endl;
+  std::cout << "cider res:" << cider_res_batch->toStringForArrow() << std::endl;
   EXPECT_TRUE(
       CiderBatchChecker::checkArrowEq(expected_batch, cider_res_batch, ignore_order));
 }
