@@ -152,7 +152,6 @@ class CiderFilterRandomTestNG : public CiderNextgenBenchmarkBase {
  public:
   CiderFilterRandomTestNG() {
     table_name_ = "test";
-    // FIXME: (jikunshang) revert string columns when supported to gen duck value.
     create_ddl_ =
         R"(CREATE TABLE test(col_1 INTEGER, col_2 BIGINT, col_3 FLOAT, col_4 DOUBLE,
            col_5 INTEGER, col_6 BIGINT, col_7 FLOAT, col_8 DOUBLE, col_9 VARCHAR(10),
@@ -160,7 +159,7 @@ class CiderFilterRandomTestNG : public CiderNextgenBenchmarkBase {
 
     QueryArrowDataGenerator::generateBatchByTypes(input_schema_,
                                                   input_array_,
-                                                  99,
+                                                  global_row_num,
                                                   {"col_1",
                                                    "col_2",
                                                    "col_3",
@@ -268,8 +267,7 @@ int main(int argc, char** argv) {
 
   gflags::ParseCommandLineFlags(&argc, &argv, true);
 
-  // std::vector<int> row_nums{100'000, 1'000'000, 10'000'000};
-  std::vector<int> row_nums{10'000};
+  std::vector<int> row_nums{100'000, 1'000'000, 10'000'000};
 
   int err{0};
 
