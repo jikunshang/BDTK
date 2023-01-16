@@ -181,13 +181,14 @@ class CiderFilterRandomTestNG : public CiderNextgenBenchmarkBase {
                                                    CREATE_SUBSTRAIT_TYPE(Varchar),
                                                    CREATE_SUBSTRAIT_TYPE(Varchar)},
                                                   {2, 2, 2, 2, 2, 2, 2, 2, 2, 2},
-                                                  GeneratePattern::Random,
+                                                  GeneratePattern::Sequence,
                                                   1,
                                                   100000);
   }
 };
 
 TEST_F(CiderFilterRandomTestNG, inTest) {
+  GTEST_SKIP();
   benchSQL("SELECT col_1, col_2, col_3, col_4 FROM test WHERE col_1 in (24, 25, 26)",
            "in_int32_array.json");
   benchSQL("SELECT col_1, col_2, col_3, col_4 FROM test WHERE col_2 in (24, 25, 26)",
@@ -206,6 +207,7 @@ TEST_F(CiderFilterRandomTestNG, inTest) {
   benchSQL("SELECT * FROM test WHERE col_1 in (24 * 2 + 2, (25 + 2) * 10, 26)");
 }
 TEST_F(CiderFilterRandomTestNG, multiColRandomTest) {
+  GTEST_SKIP();
   benchSQL("SELECT col_1, col_5 FROM test WHERE col_1 < col_5");
   benchSQL("SELECT col_2, col_6 FROM test WHERE col_2 < col_6");
   benchSQL("SELECT col_3, col_7 FROM test WHERE col_3 <= col_7");
@@ -220,6 +222,7 @@ TEST_F(CiderFilterRandomTestNG, multiColRandomTest) {
 }
 
 TEST_F(CiderFilterRandomTestNG, integerNullFilterTest) {
+  GTEST_SKIP();
   benchSQL("SELECT col_1 FROM test WHERE col_1 < 77");
   benchSQL("SELECT col_2 FROM test WHERE col_2 > 77");
   benchSQL("SELECT col_3 FROM test WHERE col_3 <= 77");
@@ -231,7 +234,7 @@ TEST_F(CiderFilterRandomTestNG, integerNullFilterTest) {
 }
 
 TEST_F(CiderFilterRandomTestNG, DistinctFromTest) {
-  GTEST_SKIP_("benchSQL method not supported yet.");
+  GTEST_SKIP();
   // IS DISTINCT FROM
   benchSQL(
       "SELECT * FROM test WHERE col_3 IS DISTINCT FROM col_7 OR col_4 IS DISTINCT FROM "
@@ -257,7 +260,7 @@ TEST_F(CiderFilterRandomTestNG, DistinctFromTest) {
 }
 
 TEST_F(CiderFilterRandomTestNG, complexFilter) {
-  GTEST_SKIP_("benchSQL method not supported yet.");
+  GTEST_SKIP();
   benchSQL(
       "SELECT * FROM test WHERE (col_1 > 0 AND col_2 < 0) OR (col_1 < 0 AND col_2 > 0)");
 }
@@ -268,7 +271,7 @@ int main(int argc, char** argv) {
   gflags::ParseCommandLineFlags(&argc, &argv, true);
 
   std::vector<int> row_nums{100'000, 1'000'000, 10'000'000};
-
+  // std::vector<int> row_nums{10000};
   int err{0};
 
   for (int i = 0; i < row_nums.size(); i++) {

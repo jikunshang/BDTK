@@ -47,7 +47,9 @@ void CiderNextgenBenchmarkRunner::runQueryOneBatch(
     INJECT_TIMER(run);
     // Step 3: run on this batch
     processor_->processNextBatch(&input_array, &input_schema);
-
+  }
+  {
+    INJECT_TIMER(fetch);
     // Step 4: fetch data
     processor_->getResult(output_array, output_schema);
   }
