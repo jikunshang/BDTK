@@ -20,7 +20,7 @@
 project(VeloxPlugin)
 
 set(CMAKE_CXX_FLAGS
-    "${CMAKE_CXX_FLAGS} -mavx2 -mfma -mavx -mf16c -masm=intel -mlzcnt")
+    "${CMAKE_CXX_FLAGS} -mavx2 -mfma -mavx -mf16c -masm=intel -mlzcnt -fPIC")
 
 find_library(GLOG glog)
 

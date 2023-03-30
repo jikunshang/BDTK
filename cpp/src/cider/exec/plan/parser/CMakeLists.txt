@@ -38,6 +38,9 @@ set_source_files_properties(${PROTO_OUTPUT_FILES} PROPERTIES GENERATED TRUE)
 
 get_filename_component(PROTO_DIR ${substrait_proto_directory}/, DIRECTORY)
 
+message("---------- PROTO_OUTPUT_DIR: ${PROTO_OUTPUT_DIR}")
+message("---------- PROTO_SRCS: ${PROTO_SRCS}")
+message("---------- PROTO_HDRS: ${PROTO_HDRS}")
 # Generate Substrait hearders
 add_custom_command(
   OUTPUT ${PROTO_OUTPUT_FILES}
@@ -49,8 +52,8 @@ add_custom_command(
 add_custom_target(substrait_proto_cider ALL DEPENDS ${PROTO_OUTPUT_FILES})
 add_dependencies(substrait_proto_cider protobuf::libprotobuf)
 
-add_library(substrait ${PROTO_SRCS})
-target_link_libraries(substrait protobuf fmt::fmt)
+# add_library(substrait ${PROTO_SRCS}) target_link_libraries(substrait protobuf
+# fmt::fmt)
 
 set(CMAKE_CXX_FLAGS
     "${CMAKE_CXX_FLAGS} -Wno-attributes -Wno-write-strings -Wno-unused-function -Wno-unused-label -Wno-sign-compare"

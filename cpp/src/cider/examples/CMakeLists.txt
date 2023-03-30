@@ -17,9 +17,9 @@
 # specific language governing permissions and limitations
 # under the License.
 
-add_executable(ExpressionEvalExample ExpressionEvalExample.cpp)
-target_link_libraries(ExpressionEvalExample test_utils cider_expr_builder cider
-                      substrait)
+# add_executable(ExpressionEvalExample ExpressionEvalExample.cpp)
+# target_link_libraries(ExpressionEvalExample test_utils cider_expr_builder
+# cider ${SUBSTRAIT_PROTO_LIB})
 
-add_executable(CiderHashTableExample CiderHashTableExample.cpp)
-target_link_libraries(CiderHashTableExample cider cider_hashtable_join)
+# add_executable(CiderHashTableExample CiderHashTableExample.cpp)
+# target_link_libraries(CiderHashTableExample cider cider_hashtable_join)

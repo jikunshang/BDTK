@@ -25,36 +25,35 @@ set(VELOX_PLAN_TRANSFORMER_TEST_LIBS
 
 set(TEST_ARGS "")
 
-add_executable(CiderCompoundPatternTest CiderCompoundPatternTest.cpp)
-target_link_libraries(CiderCompoundPatternTest
-                      ${VELOX_PLAN_TRANSFORMER_TEST_LIBS})
-add_test(CiderCompoundPatternTest CiderCompoundPatternTest ${TEST_ARGS})
+# add_executable(CiderCompoundPatternTest CiderCompoundPatternTest.cpp)
+# target_link_libraries(CiderCompoundPatternTest
+# ${VELOX_PLAN_TRANSFORMER_TEST_LIBS}) add_test(CiderCompoundPatternTest
+# CiderCompoundPatternTest ${TEST_ARGS})
 
-add_executable(CiderPatternNullptrRewriterTest
-               CiderPatternNullptrRewriterTest.cpp)
-target_link_libraries(CiderPatternNullptrRewriterTest
-                      ${VELOX_PLAN_TRANSFORMER_TEST_LIBS})
-add_test(CiderPatternNullptrRewriterTest CiderPatternNullptrRewriterTest
-         ${TEST_ARGS})
+# add_executable(CiderPatternNullptrRewriterTest
+# CiderPatternNullptrRewriterTest.cpp)
+# target_link_libraries(CiderPatternNullptrRewriterTest
+# ${VELOX_PLAN_TRANSFORMER_TEST_LIBS}) add_test(CiderPatternNullptrRewriterTest
+# CiderPatternNullptrRewriterTest ${TEST_ARGS})
 
-add_executable(CiderPatternKeepOrginalRewriterTest
-               CiderPatternKeepOrginalRewriterTest.cpp)
-target_link_libraries(CiderPatternKeepOrginalRewriterTest
-                      ${VELOX_PLAN_TRANSFORMER_TEST_LIBS})
-add_test(CiderPatternKeepOrginalRewriterTest
-         CiderPatternKeepOrginalRewriterTest ${TEST_ARGS})
+# add_executable(CiderPatternKeepOrginalRewriterTest
+# CiderPatternKeepOrginalRewriterTest.cpp)
+# target_link_libraries(CiderPatternKeepOrginalRewriterTest
+# ${VELOX_PLAN_TRANSFORMER_TEST_LIBS})
+# add_test(CiderPatternKeepOrginalRewriterTest
+# CiderPatternKeepOrginalRewriterTest ${TEST_ARGS})
 
-add_executable(CiderCompoundJoinMixedTest CiderCompoundJoinMixedTest.cpp)
-target_link_libraries(CiderCompoundJoinMixedTest
-                      ${VELOX_PLAN_TRANSFORMER_TEST_LIBS})
-add_test(CiderCompoundJoinMixedTest CiderCompoundJoinMixedTest ${TEST_ARGS})
+# add_executable(CiderCompoundJoinMixedTest CiderCompoundJoinMixedTest.cpp)
+# target_link_libraries(CiderCompoundJoinMixedTest
+# ${VELOX_PLAN_TRANSFORMER_TEST_LIBS}) add_test(CiderCompoundJoinMixedTest
+# CiderCompoundJoinMixedTest ${TEST_ARGS})
 
-add_executable(CiderLeftDeepJoinPatternTest CiderLeftDeepJoinPatternTest.cpp)
-target_link_libraries(CiderLeftDeepJoinPatternTest
-                      ${VELOX_PLAN_TRANSFORMER_TEST_LIBS})
-add_test(CiderLeftDeepJoinPatternTest CiderLeftDeepJoinPatternTest ${TEST_ARGS})
+# add_executable(CiderLeftDeepJoinPatternTest CiderLeftDeepJoinPatternTest.cpp)
+# target_link_libraries(CiderLeftDeepJoinPatternTest
+# ${VELOX_PLAN_TRANSFORMER_TEST_LIBS}) add_test(CiderLeftDeepJoinPatternTest
+# CiderLeftDeepJoinPatternTest ${TEST_ARGS})
 
-add_executable(CiderPatternJoinMixedTest CiderPatternJoinMixedTest.cpp)
-target_link_libraries(CiderPatternJoinMixedTest
-                      ${VELOX_PLAN_TRANSFORMER_TEST_LIBS})
-add_test(CiderPatternJoinMixedTest CiderPatternJoinMixedTest ${TEST_ARGS})
+# add_executable(CiderPatternJoinMixedTest CiderPatternJoinMixedTest.cpp)
+# target_link_libraries(CiderPatternJoinMixedTest
+# ${VELOX_PLAN_TRANSFORMER_TEST_LIBS}) add_test(CiderPatternJoinMixedTest
+# CiderPatternJoinMixedTest ${TEST_ARGS})

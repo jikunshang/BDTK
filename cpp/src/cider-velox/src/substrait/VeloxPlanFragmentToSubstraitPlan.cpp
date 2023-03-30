@@ -137,40 +137,40 @@ void VeloxPlanFragmentToSubstraitPlan::reconstructVeloxPlan(
       planBuilder_->addNode([&](std::string id, core::PlanNodePtr input) {
         return std::make_shared<core::ValuesNode>(valuesNode->id(), valuesNode->values());
       });
-    } else if (auto joinNode =
-                   std::dynamic_pointer_cast<const core::AbstractJoinNode>(*riter)) {
-      // TODO: current does not support for pattern like "filter-project->join->filter"
-      const auto& joinLeftSource = joinNode->sources()[0];
-      const auto& joinRightSource = joinNode->sources()[1];
+      // } else if (auto joinNode =
+      //                std::dynamic_pointer_cast<const core::AbstractJoinNode>(*riter)) {
+      //   // TODO: current does not support for pattern like
+      //   "filter-project->join->filter" const auto& joinLeftSource =
+      //   joinNode->sources()[0]; const auto& joinRightSource = joinNode->sources()[1];
 
-      auto leftValuesNode = std::make_shared<core::ValuesNode>(
-          joinLeftSource->id(), makeVectors(joinLeftSource->outputType()));
-      auto rigthValuesNode = std::make_shared<core::ValuesNode>(
-          joinRightSource->id(), makeVectors(joinRightSource->outputType()));
+      //   auto leftValuesNode = std::make_shared<core::ValuesNode>(
+      //       joinLeftSource->id(), makeVectors(joinLeftSource->outputType()));
+      //   auto rigthValuesNode = std::make_shared<core::ValuesNode>(
+      //       joinRightSource->id(), makeVectors(joinRightSource->outputType()));
 
-      if (std::dynamic_pointer_cast<const core::HashJoinNode>(*riter)) {
-        planBuilder_->addNode([&](std::string id, core::PlanNodePtr input) {
-          return std::make_shared<core::HashJoinNode>(joinNode->id(),
-                                                      joinNode->joinType(),
-                                                      joinNode->leftKeys(),
-                                                      joinNode->rightKeys(),
-                                                      joinNode->filter(),
-                                                      leftValuesNode,
-                                                      rigthValuesNode,
-                                                      joinNode->outputType());
-        });
-      } else {
-        planBuilder_->addNode([&](std::string id, core::PlanNodePtr input) {
-          return std::make_shared<core::MergeJoinNode>(joinNode->id(),
-                                                       joinNode->joinType(),
-                                                       joinNode->leftKeys(),
-                                                       joinNode->rightKeys(),
-                                                       joinNode->filter(),
-                                                       leftValuesNode,
-                                                       rigthValuesNode,
-                                                       joinNode->outputType());
-        });
-      }
+      //   if (std::dynamic_pointer_cast<const core::HashJoinNode>(*riter)) {
+      //     planBuilder_->addNode([&](std::string id, core::PlanNodePtr input) {
+      //       return std::make_shared<core::HashJoinNode>(joinNode->id(),
+      //                                                   joinNode->joinType(),
+      //                                                   joinNode->leftKeys(),
+      //                                                   joinNode->rightKeys(),
+      //                                                   joinNode->filter(),
+      //                                                   leftValuesNode,
+      //                                                   rigthValuesNode,
+      //                                                   joinNode->outputType());
+      //     });
+      //   } else {
+      //     planBuilder_->addNode([&](std::string id, core::PlanNodePtr input) {
+      //       return std::make_shared<core::MergeJoinNode>(joinNode->id(),
+      //                                                    joinNode->joinType(),
+      //                                                    joinNode->leftKeys(),
+      //                                                    joinNode->rightKeys(),
+      //                                                    joinNode->filter(),
+      //                                                    leftValuesNode,
+      //                                                    rigthValuesNode,
+      //                                                    joinNode->outputType());
+      //     });
+      //   }
     } else {
       VELOX_UNSUPPORTED("Unsupported node '{}'", riter->get()->name());
     }

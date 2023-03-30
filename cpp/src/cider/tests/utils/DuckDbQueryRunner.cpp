@@ -408,8 +408,8 @@ DuckDbResultConvertor::fetchDataToArrow(
     chunk->ToArrowArray(arrow_array.get());
     updateChildrenNullCnt(arrow_array.get());
     std::string config_timezone{"UTC"};
-    duckdb::QueryResult::ToArrowSchema(
-        arrow_schema.get(), result->types, result->names, config_timezone);
+    // duckdb::QueryResult::ToArrowSchema(
+    //     arrow_schema.get(), result->types, result->names);
     arrow_vector.push_back(
         std::make_pair(std::move(arrow_array), std::move(arrow_schema)));
   }

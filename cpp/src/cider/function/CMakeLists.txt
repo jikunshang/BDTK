@@ -99,6 +99,10 @@ add_custom_target(
   DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/RuntimeFunctions.bc
           ${CMAKE_CURRENT_BINARY_DIR}/ExtensionFunctions.ast)
 
+# find_library(SUBSTRAIT_PROTO_LIB substrait_proto_lib PATHS
+# "/workspace/gluten/ep/build-velox/build/velox_ep/_build/release/velox/substrait/")
+
 add_library(cider_function SHARED ${function_source_files})
 add_dependencies(cider_function QueryEngineFunctionsTargets)
-target_link_libraries(cider_function nextgen re2 cider_type_plan substrait)
+target_link_libraries(cider_function nextgen re2 cider_type_plan
+                      ${SUBSTRAIT_PROTO_LIB} protobuf)

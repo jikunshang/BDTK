@@ -18,9 +18,10 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-
 #include <llvm/Analysis/TargetTransformInfo.h>
 #include <llvm/ExecutionEngine/JITEventListener.h>
+#include <llvm/Support/DynamicLibrary.h>
+#include <iostream>
 
 #include "exec/nextgen/jitlib/llvmjit/LLVMJITEngine.h"
 #include "exec/nextgen/jitlib/llvmjit/LLVMJITModule.h"
@@ -35,11 +36,14 @@ LLVMJITEngine::~LLVMJITEngine() {
 }
 
 LLVMJITEngineBuilder::LLVMJITEngineBuilder(LLVMJITModule& module, llvm::TargetMachine* tm)
-    : module_(module), llvm_module_(module.module_.get()), tm_(tm) {}
+    : module_(module), llvm_module_(module.module_.get()), tm_(tm) {
+  llvm::sys::DynamicLibrary::LoadLibraryPermanently("/lib/libcider.so");
+  llvm::sys::DynamicLibrary::LoadLibraryPermanently("/lib//libcider_function.so");
+}
 
 void LLVMJITEngineBuilder::dumpASM(LLVMJITEngine& engine) {
   const std::string fname = llvm_module_->getModuleIdentifier() + ".s";
-
+  std::cerr << "file name: " << fname << std::endl;
   std::error_code error_code;
   llvm::raw_fd_ostream file(fname, error_code, llvm::sys::fs::F_None);
   if (error_code) {
@@ -81,7 +85,8 @@ std::unique_ptr<LLVMJITEngine> LLVMJITEngineBuilder::build() {
 
   engine->engine->finalizeObject();
 
-  if (module_.getCompilationOptions().dump_ir) {
+  // if (module_.getCompilationOptions().dump_ir) {
+  if (true) {
     dumpASM(*engine);
   }
 

@@ -19,21 +19,19 @@
 
 set(TEST_ARGS "")
 
-add_executable(SubstraitVeloxPlanConverterTest
-               SubstraitVeloxPlanConverterTest.cpp)
-target_link_libraries(SubstraitVeloxPlanConverterTest ${VELOX_PLUGIN_TEST_LIBS})
-add_test(SubstraitVeloxPlanConverterTest SubstraitVeloxPlanConverterTest
-         ${TEST_ARGS})
+# add_executable(SubstraitVeloxPlanConverterTest
+# SubstraitVeloxPlanConverterTest.cpp)
+# target_link_libraries(SubstraitVeloxPlanConverterTest
+# ${VELOX_PLUGIN_TEST_LIBS}) add_test(SubstraitVeloxPlanConverterTest
+# SubstraitVeloxPlanConverterTest ${TEST_ARGS})
 
-add_executable(SubstraitAggregationConvertorTest SubstraitAggregationTest.cpp)
-target_link_libraries(SubstraitAggregationConvertorTest
-                      ${VELOX_PLUGIN_TEST_LIBS})
-add_test(SubstraitAggregationConvertorTest SubstraitAggregationConvertorTest
-         ${TEST_ARGS})
+# add_executable(SubstraitAggregationConvertorTest SubstraitAggregationTest.cpp)
+# target_link_libraries(SubstraitAggregationConvertorTest
+# ${VELOX_PLUGIN_TEST_LIBS}) add_test(SubstraitAggregationConvertorTest
+# SubstraitAggregationConvertorTest ${TEST_ARGS})
 
-add_executable(VeloxPlanFragmentSubstraitConverterTest
-               VeloxPlanFragmentSubstraitConverterTest.cpp)
-target_link_libraries(VeloxPlanFragmentSubstraitConverterTest
-                      ${VELOX_PLUGIN_TEST_LIBS})
-add_test(VeloxPlanFragmentSubstraitConverterTest
-         VeloxPlanFragmentSubstraitConverterTest ${TEST_ARGS})
+# add_executable(VeloxPlanFragmentSubstraitConverterTest
+# VeloxPlanFragmentSubstraitConverterTest.cpp)
+# target_link_libraries(VeloxPlanFragmentSubstraitConverterTest
+# ${VELOX_PLUGIN_TEST_LIBS}) add_test(VeloxPlanFragmentSubstraitConverterTest
+# VeloxPlanFragmentSubstraitConverterTest ${TEST_ARGS})

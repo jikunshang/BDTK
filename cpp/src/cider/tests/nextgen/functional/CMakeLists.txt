@@ -22,7 +22,7 @@ set(NEXTGEN_FUNCTIONAL_TEST_LIBS
     cider_util
     test_utils
     duckdb
-    substrait
+    ${SUBSTRAIT_PROTO_LIB}
     cider
     cider_function
     cider_func_lkup

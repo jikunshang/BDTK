@@ -22,7 +22,7 @@ set(DEP_LIBS
     cider_util
     test_utils
     duckdb
-    substrait
+    ${SUBSTRAIT_PROTO_LIB}
     cider
     QueryEngine
     dl)

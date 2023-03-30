@@ -43,6 +43,7 @@
 #include <llvm/Transforms/Vectorize/LoopVectorize.h>
 
 #include <filesystem>
+#include <iostream>
 #include "exec/nextgen/jitlib/llvmjit/LLVMJITModule.h"
 #include "exec/nextgen/jitlib/llvmjit/LLVMJITTargets.h"
 #include "exec/nextgen/jitlib/llvmjit/LLVMJITUtils.h"
@@ -74,6 +75,7 @@ static llvm::MemoryBuffer* getRuntimeBuffer() {
   std::call_once(has_set_buffer, [&]() {
     auto root_path = cider::get_root_abs_path();
     auto template_path = root_path + "/function/RuntimeFunctions.bc";
+    std::cerr << "------------------ path is " + root_path << std::endl;
     CHECK(std::filesystem::exists(template_path));
 
     auto buffer_or_error = llvm::MemoryBuffer::getFile(template_path);

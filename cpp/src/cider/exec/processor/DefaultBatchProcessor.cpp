@@ -69,9 +69,13 @@ DefaultBatchProcessor::DefaultBatchProcessor(
 
   auto translator =
       std::make_shared<generator::SubstraitToRelAlgExecutionUnit>(plan->getPlan());
+  std::cerr << "gen translator done" << std::endl;
   RelAlgExecutionUnit ra_exe_unit = translator->createRelAlgExecutionUnit();
+  std::cerr << "gen EU done" << std::endl;
   codegen_context_ = nextgen::compile(ra_exe_unit, codegen_options);
+  std::cerr << "compile done" << std::endl;
   runtime_context_ = codegen_context_->generateRuntimeCTX(allocator);
+  std::cerr << "gen runtime CTX done" << std::endl;
   query_func_ = reinterpret_cast<nextgen::QueryFunc>(
       codegen_context_->getJITFunction()->getFunctionPointer<void, int8_t*, int8_t*>());
 }
@@ -91,6 +95,7 @@ DefaultBatchProcessor::DefaultBatchProcessor(
 
 void DefaultBatchProcessor::processNextBatch(const struct ArrowArray* array,
                                              const struct ArrowSchema* schema) {
+  std::cerr << "processNextBatch start! " << std::endl;
   if (BatchProcessorState::kRunning != state_) {
     CIDER_THROW(CiderRuntimeException,
                 "DefaultBatchProcessor::processNextBatch can only be called if state is "
@@ -103,13 +108,16 @@ void DefaultBatchProcessor::processNextBatch(const struct ArrowArray* array,
     input_arrow_schema_ = schema;
   }
 
+  std::cerr << "run query func! " << std::endl;
   int ret = query_func_((int8_t*)runtime_context_.get(), (int8_t*)array);
   if (ret != 0) {
     CIDER_THROW(CiderRuntimeException,
                 getErrorMessageFromErrCode(static_cast<cider::jitlib::ERROR_CODE>(ret)));
   }
+  std::cerr << "run query func end! " << std::endl;
   runtime_context_->destroyStringHeap();
   has_result_ = true;
+  std::cerr << "destroy " << std::endl;
 
   if (!need_spill_) {
     if (input_arrow_array_->release) {
@@ -122,6 +130,7 @@ void DefaultBatchProcessor::processNextBatch(const struct ArrowArray* array,
       input_arrow_schema_ = nullptr;
     }
   }
+  std::cerr << "processNextBatch end! " << std::endl;
 }
 
 BatchProcessorState DefaultBatchProcessor::getState() {

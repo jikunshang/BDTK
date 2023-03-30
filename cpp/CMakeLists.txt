@@ -77,12 +77,37 @@ option(CIDER_ENABLE_BENCHMARK "Build benchmark for Cider." OFF)
 option(CIDER_ENABLE_AVX512 "Enable avx512 instructions." OFF)
 
 if(BDTK_ENABLE_CIDER)
+
+  # set(VELOX_HOME "${CMAKE_SOURCE_DIR}/thirdparty/velox")
+  set(VELOX_HOME "/workspace/gluten/ep/build-velox/build/velox_ep/")
+  # User can specify VELOX_BUILD_PATH, if Velox are built elsewhere.
+  if(NOT DEFINED VELOX_BUILD_PATH)
+    if(${CMAKE_BUILD_TYPE} STREQUAL "Debug")
+      set(VELOX_BUILD_PATH
+          "${VELOX_HOME}/_build/debug"
+          CACHE PATH "Velox build directory.")
+    else()
+      set(VELOX_BUILD_PATH
+          "${VELOX_HOME}/_build/release"
+          CACHE PATH "Velox build directory.")
+    endif()
+  endif()
+
+  set(VELOX_COMPONENTS_PATH "${VELOX_BUILD_PATH}/velox")
+  find_library(
+    SUBSTRAIT_PROTO_LIB substrait_proto_lib
+    PATHS
+      "/workspace/gluten/ep/build-velox/build/velox_ep/_build/release/velox/substrait/"
+  )
+  message("find substrait: ${SUBSTRAIT_PROTO_LIB}")
+
   if(CIDER_ENABLE_VELOX)
     # Disable components when enable velox build
     set(CIDER_ENABLE_GOOGLETEST OFF)
-    set(CIDER_ENABLE_DUCKDB OFF)
+    # set(CIDER_ENABLE_DUCKDB OFF)
     set(CIDER_ENABLE_SUBSTRAIT OFF)
   endif()
+  set(CIDER_ENABLE_DUCKDB ON)
 
   if(CIDER_ENABLE_TESTS)
     enable_testing()
@@ -93,8 +118,7 @@ if(BDTK_ENABLE_CIDER)
     add_subdirectory(thirdparty/googletest)
     include_directories(thirdparty/googletest/googletest/include)
   else()
-    include_directories(
-      thirdparty/velox/third_party/googletest/googletest/include)
+    include_directories(${VELOX_HOME}/third_party/googletest/googletest/include)
   endif()
 
   if(CIDER_ENABLE_BENCHMARK OR ENABLE_BENCHMARK)
@@ -116,18 +140,18 @@ if(BDTK_ENABLE_CIDER)
     add_subdirectory(thirdparty/duckdb-amalgamation)
     include_directories(${CMAKE_BINARY_DIR}/thirdparty/duckdb-amalgamation)
   else()
-    include_directories(thirdparty/velox/velox/external/duckdb)
+    include_directories(${VELOX_HOME}/velox/external/duckdb)
   endif()
 
   if(CIDER_ENABLE_SUBSTRAIT)
     set(substrait_directory ${CMAKE_SOURCE_DIR}/thirdparty/substrait/proto)
     include_directories(thirdparty/substrait/proto)
   else()
-    set(substrait_directory
-        ${CMAKE_SOURCE_DIR}/thirdparty/velox/velox/substrait/proto)
-    include_directories(thirdparty/velox/velox/substrait/proto)
+    set(substrait_directory ${VELOX_HOME}/velox/substrait/proto)
+    message("----------substrait_directory: ${substrait_directory}-----  ")
+    include_directories(${VELOX_HOME}/velox/substrait/proto)
   endif()
-
+  find_package(yaml-cpp)
   # TODO: remove after cleanup public API dependency RapidJSON
   include_directories(thirdparty/rapidjson/include)
   add_definitions(-DRAPIDJSON_HAS_STDSTRING)
@@ -147,7 +171,8 @@ if(BDTK_ENABLE_CIDER)
   add_subdirectory(src/cider)
 
   if(CIDER_ENABLE_VELOX)
-    add_subdirectory(thirdparty/velox)
+    include_directories(${VELOX_HOME})
+    # add_subdirectory(thirdparty/velox)
     add_subdirectory(src/cider-velox)
   endif()
 endif()

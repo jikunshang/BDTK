@@ -22,7 +22,7 @@ set(PROCESSOR_TEST_LIBS
     cider_util
     test_utils
     duckdb
-    substrait
+    ${SUBSTRAIT_PROTO_LIB}
     cider
     cider_processor
     dl)

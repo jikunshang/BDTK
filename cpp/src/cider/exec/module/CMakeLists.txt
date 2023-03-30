@@ -30,7 +30,7 @@ target_link_libraries(
   ${Boost_LIBRARIES}
   ${GFLAGS_LIBRARIES}
   ${TBB_LIBS}
-  substrait
+  ${SUBSTRAIT_PROTO_LIB}
   yaml-cpp
   cider_hashtable_join)
 

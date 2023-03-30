@@ -148,7 +148,7 @@ bool CiderHashJoinBuild::finishHashBuild() {
 void CiderHashJoinBuild::postHashBuildProcess() {
   // Release the unused memory reservation since we have finished the table
   // build.
-  operatorCtx_->mappedMemory()->tracker()->release();
+  // operatorCtx_->mappedMemory()->tracker()->release();
 }
 
 }  // namespace facebook::velox::plugin

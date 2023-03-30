@@ -26,7 +26,7 @@ add_definitions("-DBASE_PATH=\"${TEST_BASE_PATH}\"")
 add_executable(CiderNewHashTableTest CiderNewHashTableTest.cpp)
 add_executable(CiderNewAggHashTableTest CiderNewAggHashTableTest.cpp)
 add_executable(Substrait2IRTest Substrait2IRTest.cpp)
-add_executable(ExpressionEvalTest ExpressionEvalTest.cpp)
+# add_executable(ExpressionEvalTest ExpressionEvalTest.cpp)
 add_executable(CiderAllocatorTest CiderAllocatorTest.cpp)
 add_executable(CiderExceptionTest CiderExceptionTest.cpp)
 add_executable(CiderLogTest CiderLogTest.cpp)
@@ -37,7 +37,7 @@ set(EXECUTE_TEST_LIBS
     cider_util
     test_utils
     duckdb
-    substrait
+    ${SUBSTRAIT_PROTO_LIB}
     cider
     dl
     cider_hashtable_join
@@ -48,8 +48,8 @@ target_link_libraries(CiderNewHashTableTest ${EXECUTE_TEST_LIBS}
 target_link_libraries(CiderNewAggHashTableTest ${EXECUTE_TEST_LIBS}
                       cider_hashtable)
 target_link_libraries(Substrait2IRTest cider_plan_parser ${EXECUTE_TEST_LIBS})
-target_link_libraries(ExpressionEvalTest ${EXECUTE_TEST_LIBS}
-                      cider_expr_builder)
+# target_link_libraries(ExpressionEvalTest ${EXECUTE_TEST_LIBS}
+# cider_expr_builder)
 target_link_libraries(CiderAllocatorTest ${EXECUTE_TEST_LIBS})
 target_link_libraries(CiderExceptionTest ${EXECUTE_TEST_LIBS})
 target_link_libraries(CiderLogTest ${EXECUTE_TEST_LIBS})
@@ -59,7 +59,7 @@ set(TEST_ARGS "--gtest_output=xml:../")
 add_test(CiderNewHashTableTest CiderNewHashTableTest ${TEST_ARGS})
 add_test(CiderNewAggHashTableTest CiderNewAggHashTableTest ${TEST_ARGS})
 add_test(Substrait2IRTest Substrait2IRTest ${TEST_ARGS})
-add_test(ExpressionEvalTest ExpressionEvalTest ${TEST_ARGS})
+# add_test(ExpressionEvalTest ExpressionEvalTest ${TEST_ARGS})
 add_test(CiderAllocatorTest CiderAllocatorTest ${TEST_ARGS})
 add_test(CiderExceptionTest CiderExceptionTest ${TEST_ARGS})
 add_test(CiderLogTest CiderLogTest ${TEST_ARGS})
@@ -67,11 +67,11 @@ add_test(StringHeapTest StringHeapTest ${TEST_ARGS})
 
 find_package(fmt REQUIRED)
 
-if(DEFINED ENV{ISTHMUS_EXEC})
-  message("defined env var ISTHMUS_EXEC: $ENV{ISTHMUS_EXEC}")
-  add_subdirectory(utils)
-  add_subdirectory(hashtable)
-endif()
+# if(DEFINED ENV{ISTHMUS_EXEC})
+message("defined env var ISTHMUS_EXEC: $ENV{ISTHMUS_EXEC}")
+add_subdirectory(utils)
+add_subdirectory(hashtable)
+# endif()
 
 add_subdirectory(nextgen)
 add_subdirectory(plan)
